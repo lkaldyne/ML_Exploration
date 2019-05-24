@@ -1,5 +1,5 @@
 import numpy as np
-from sklearn import preprocessing, model_selection, neighbors
+from sklearn import model_selection, svm
 import pandas as pd
 import pickle
 
@@ -12,13 +12,13 @@ y = np.array(df['class'])
 
 Xtrain, Xtest, ytrain, ytest = model_selection.train_test_split(X,y,test_size=0.2)
 
-# clf = neighbors.KNeighborsClassifier()
+
+clf = svm.SVC()
 # clf.fit(Xtrain,ytrain)
 #
-# with open('KNN_BCA.pickle','wb') as f:
+# with open('SVM_BCA.pickle','wb') as f:
 #     pickle.dump(clf, f)
-
-pickle_in = open('KNN_BCA.pickle', 'rb')
+pickle_in = open('SVM_BCA.pickle', 'rb')
 clf = pickle.load(pickle_in)
 
 accuracy = clf.score(Xtest, ytest)
