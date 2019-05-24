@@ -53,7 +53,7 @@ class KNN:
                 vote_result[1] = curVotes
         return vote_result[0]
 
-df = pd.read_csv('..\\training_data\\breast-cancer-wisconsin.data')
+df = pd.read_csv('..\\..\\training_data\\breast-cancer-wisconsin.data')
 df.replace('?', -99999, inplace=True)
 df.drop(['id'], 1, inplace=True)
 

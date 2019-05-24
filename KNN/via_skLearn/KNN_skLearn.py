@@ -3,7 +3,7 @@ from sklearn import preprocessing, model_selection, neighbors
 import pandas as pd
 import pickle
 
-df = pd.read_csv('..\\training_data\\breast-cancer-wisconsin.data')
+df = pd.read_csv('..\\..\\training_data\\breast-cancer-wisconsin.data')
 df.replace('?', -99999, inplace=True)
 df.drop(['id'], 1, inplace=True)
 
