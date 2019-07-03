@@ -4,13 +4,14 @@ import numpy as np
 style.use('ggplot')
 
 class Support_Vector_Machine:
-    def __init__(self, visualization = False):
+    def __init__(self, visualization = False, debug = False):
         self.data = None
         self.min_feature_value = None
         self.max_feature_value = None
         self.w = None
         self.b = None
         self.visualization = visualization
+        self.debug = debug
         self.colors = {1:'r', -1: 'b'}
         if self.visualization:
             self.fig = plt.figure()
@@ -85,6 +86,11 @@ class Support_Vector_Machine:
             self.b = opt_choice[1]
             latest_optimum = opt_choice[0][0]+step*2
 
+        if self.debug:
+            for yi in self.data:
+                for xi in self.data[yi]:
+                    print(xi,': ',yi*(np.dot(self.w,xi) + self.b))
+
     def predict(self, features):
         # sign(x.w+b)
         classification = np.sign(np.dot(np.array(features), self.w) + self.b)
@@ -133,8 +139,8 @@ data_dict = {-1:np.array([[1,7],
                           [6,-1],
                           [7,3]])
              }
-clf = Support_Vector_Machine(True)
+clf = Support_Vector_Machine(True, True)
 
 clf.fit(data=data_dict)
-print (clf.predict([2,5]))
+print (clf.predict([4,7.5]))
 clf.visualize()
