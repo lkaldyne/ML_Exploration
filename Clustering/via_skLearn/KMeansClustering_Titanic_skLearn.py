@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 from matplotlib import style
 from sklearn.cluster import KMeans
 import numpy as np
-from sklearn import preprocessing, model_selection
+from sklearn import preprocessing
 import pandas as pd
 import sys
 style.use('ggplot')
@@ -27,9 +27,6 @@ class TitanicKMeansCluster:
                     if entry not in self.text_to_digit_map:
                         self.text_to_digit_map[entry] = incrementor
                         incrementor += 1
-                    # else:
-                    #     print('Cannot preprocess text data. There is a clash in names between two columns!')
-                    #     sys.exit(1)
 
                 dataframe[column] = list(map(self.convert_to_digit, dataframe[column]))
 
@@ -37,12 +34,28 @@ class TitanicKMeansCluster:
 
 
 df = pd.read_excel('../../training_data/titanicData.xls')
-df.drop(['body', 'name', 'ticket'], 1, inplace=True)
+df.drop(['body', 'name'], 1, inplace=True)
 df.convert_objects(convert_numeric=True)
 df.fillna(0, inplace=True)
 a = TitanicKMeansCluster()
 df = a.handle_non_numerical_data(df)
-print(df.head())
+
+X = np.array(df.drop(['survived'], 1).astype(float))
+X = preprocessing.scale(X)
+y = np.array((df['survived']))
+
+clf = KMeans(n_clusters=2)
+clf.fit(X)
+
+correct = 0
+for i in range(len(X)):
+    predictEntry = np.array(X[i].astype(float)).reshape(-1, len(X[i]))
+    prediction = clf.predict(predictEntry)
+    if prediction[0] == y[i]:
+        correct += 1
+
+print(correct/len(X))
+
 
 
 
