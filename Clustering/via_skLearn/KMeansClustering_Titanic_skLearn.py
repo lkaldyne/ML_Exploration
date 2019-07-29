@@ -8,7 +8,7 @@ import sys
 style.use('ggplot')
 
 
-class TitanicKMeansCluster:
+class TitanicPreProcessing:
     def __init__(self):
         self.text_to_digit_map = {}
 
@@ -37,7 +37,7 @@ df = pd.read_excel('../../training_data/titanicData.xls')
 df.drop(['body', 'name'], 1, inplace=True)
 df.convert_objects(convert_numeric=True)
 df.fillna(0, inplace=True)
-a = TitanicKMeansCluster()
+a = TitanicPreProcessing()
 df = a.handle_non_numerical_data(df)
 
 X = np.array(df.drop(['survived'], 1).astype(float))
